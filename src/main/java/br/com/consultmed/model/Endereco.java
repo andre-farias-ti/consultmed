@@ -18,6 +18,7 @@ public class Endereco {
 	private String bairro;
 	private String cidade;
 	private String estado;
+	private String numero;
 	private String CEP;
 	
 	public Long getId() {
@@ -55,6 +56,12 @@ public class Endereco {
 	}
 	public void setCEP(String cEP) {
 		CEP = cEP;
+	}
+	public String getNumero() {
+		return numero;
+	}
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 }

@@ -1,8 +1,7 @@
 package br.com.consultmed.model;
 
-import java.sql.Date;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,11 +24,11 @@ public class Pessoa {
 	private String CPF;
 	private Long tipo;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne()
 	@JoinColumn(name = "id_contato")
 	private Contato contato;
 	

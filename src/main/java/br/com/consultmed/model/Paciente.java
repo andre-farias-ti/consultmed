@@ -2,7 +2,6 @@ package br.com.consultmed.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,11 +19,12 @@ public class Paciente implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_pessoa", referencedColumnName = "id")
+	private Long id;
+	
+	@OneToOne()
+    @JoinColumn(name = "id_pessoa")
     private Pessoa pessoa;
 	
-	private Long id;
 
 	public Pessoa getPessoa() {
 		return pessoa;

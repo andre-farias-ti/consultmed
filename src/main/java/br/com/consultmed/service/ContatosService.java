@@ -16,7 +16,7 @@ public class ContatosService implements IContato {
 
 	@Override
 	public void remover(Long idContato) {
-		this.remover(idContato);
+		this.service.remover(idContato);
 	}
 
 	@Override
