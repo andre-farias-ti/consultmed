@@ -4,21 +4,24 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
-import br.com.consultmed.model.Medico;
+import br.com.consultmed.model.Agendamento;
 import br.com.consultmed.model.Paciente;
-import br.com.consultmed.service.MedicoService;
+import br.com.consultmed.service.AgendamentoService;
 import br.com.consultmed.service.PacienteService;
 
 public class CadastraAgendamentoFrame extends JFrame {
@@ -35,7 +38,7 @@ private static final long serialVersionUID = 1L;
         
         JPanel principal = new JPanel( new GridLayout(2, 1) );
         
-        JPanel panel = new JPanel( new GridLayout(5, 1) );
+        JPanel panel = new JPanel( new GridLayout(2, 1) );
         
         //Caregando Pacientes
         PacienteService pacienteService = new PacienteService();
@@ -50,30 +53,17 @@ private static final long serialVersionUID = 1L;
         JComboBox comboPaciente = new JComboBox(vetorPaciente);
         panel.add(comboPaciente);
         
-        MedicoService medicoService = new MedicoService();
-        List<Medico> listaMedico = medicoService.listar();
-        
-        //Carregando medico
-        Vector vetorMedico = new Vector();
-        for(Medico m : listaMedico) {
-        	vetorMedico.addElement(m.getPessoa().getNome());
-        }
-        
-        panel.add( new JLabel("   Medico:") );
-        JComboBox comboMedico = new JComboBox(vetorMedico);
-        panel.add(comboMedico);
-        
-        panel.add( new JLabel("   Com Agendamento:") );
-        JCheckBox checkAgend = new JCheckBox();
-        panel.add(checkAgend);
-        
-	    panel.add( new JLabel("   Exame:") );
-	    JTextField exame = new JTextField(50);
-	    panel.add( exame );
-	      
-	    panel.add( new JLabel("   Descrição da Consulta:") );
-	    JTextField descricao = new JTextField(50);
-	    panel.add( descricao );
+        panel.add( new JLabel("Data e Hora:") );
+        JFormattedTextField data = new JFormattedTextField();
+        MaskFormatter maskDataHora;
+        try {
+        	maskDataHora = new MaskFormatter("##/##/#### ##:##");
+        	maskDataHora.install(data); 
+        } catch (ParseException e) {
+        	// TODO Auto-generated catch block
+        	e.printStackTrace();
+        }  
+        panel.add( data );
         
         principal.add(panel);
         
@@ -85,18 +75,24 @@ private static final long serialVersionUID = 1L;
 				
 				try {
 					
-					if(checkAgend.isSelected()) {
-						///
-					}
-					
-					Object select = comboPaciente.getSelectedItem();
-					
-					Paciente pp = null;
+					Object pacienteSelect = comboPaciente.getSelectedItem();
+					Paciente pacienteFinal = null;
 					for(Paciente p : listaPciente) {
-						if(p.getPessoa().getNome().equals(select)) {
-							pp = p;
+						if(p.getPessoa().getNome().equals(pacienteSelect)) {
+							pacienteFinal = p;
 						}
 					}
+					
+					SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+					Date dataFormatada = formato.parse(data.getText());
+					
+					Agendamento agendamento = new Agendamento();
+					agendamento.setPaciente(pacienteFinal);
+					agendamento.setDhAgenda(dataFormatada);
+					agendamento.setSituacao(1l);
+					
+					AgendamentoService agendamentoService = new AgendamentoService();
+					agendamentoService.salvar(agendamento);
 					
 					JOptionPane.showMessageDialog(null, "Agendamento Salvo!", null, 1);
 					

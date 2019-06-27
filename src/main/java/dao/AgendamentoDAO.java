@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
 import br.com.consultmed.model.Agendamento;
+import br.com.consultmed.model.Paciente;
 import br.com.consultmed.utils.JPAUtils;
 
 public class AgendamentoDAO {
@@ -23,12 +24,12 @@ public class AgendamentoDAO {
 	
 	public void remover(Long idAgendamneto){
 		this.factory.getTransaction().begin();
-		this.factory.remove(buscarAgendamnetoId(idAgendamneto));
+		this.factory.remove(buscarAgendamentoId(idAgendamneto));
 		this.factory.getTransaction().begin();
 		this.factory.close();
 	}
 	
-	public Agendamento buscarAgendamnetoId(Long idAgendamneto) {
+	public Agendamento buscarAgendamentoId(Long idAgendamneto) {
 		this.factory.getTransaction().begin();
 		Agendamento agendamento = this.factory.find(Agendamento.class, idAgendamneto);
 		return agendamento;
@@ -47,5 +48,14 @@ public class AgendamentoDAO {
 		List<Agendamento> lista = query.getResultList();
 		this.factory.close();
 		return lista;
+	}
+	
+	public Agendamento AgendamentPorPaciente(Paciente paciente) {
+		this.factory.getTransaction().begin();
+		Query query = this.factory.createQuery("SELECT a FROM Agendamento a WHERE id_paciente = :id");
+		query.setParameter("id", paciente.getId());
+		Agendamento result = (Agendamento) query.getSingleResult();
+		this.factory.close();
+		return result;
 	}
 }

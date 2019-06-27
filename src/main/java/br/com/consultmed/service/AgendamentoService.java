@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import br.com.consultmed.model.Agendamento;
+import br.com.consultmed.model.Paciente;
 import dao.AgendamentoDAO;
 import frame.CadastraAgendamentoFrame;
 
@@ -34,7 +35,7 @@ public class AgendamentoService implements IAgendamento{
 
 	@Override
 	public Agendamento buscarId(Long idAgendamento) {
-		return this.service.buscarAgendamnetoId(idAgendamento);
+		return this.service.buscarAgendamentoId(idAgendamento);
 	}
 
 	@Override
@@ -44,5 +45,10 @@ public class AgendamentoService implements IAgendamento{
         frame.setLocationRelativeTo( null );
         frame.setVisible( true );
 		
+	}
+
+	@Override
+	public Agendamento buscarAgendPaciente(Paciente paciente) {
+		return this.service.AgendamentPorPaciente(paciente);
 	}
 }

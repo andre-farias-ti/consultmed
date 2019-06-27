@@ -16,8 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import br.com.consultmed.model.Agendamento;
 import br.com.consultmed.model.Medico;
 import br.com.consultmed.model.Paciente;
+import br.com.consultmed.service.AgendamentoService;
 import br.com.consultmed.service.MedicoService;
 import br.com.consultmed.service.PacienteService;
 
@@ -85,17 +87,18 @@ public class IncluirConsultaFrame extends JFrame{
 				
 				try {
 					
-					if(checkAgend.isSelected()) {
-						///
-					}
-					
 					Object select = comboPaciente.getSelectedItem();
 					
-					Paciente pp = null;
+					Paciente PacienteFinal = null;
 					for(Paciente p : listaPciente) {
 						if(p.getPessoa().getNome().equals(select)) {
-							pp = p;
+							PacienteFinal = p;
 						}
+					}
+					
+					if(checkAgend.isSelected()) {
+						AgendamentoService agendamentoService = new AgendamentoService();
+						Agendamento agendamento = agendamentoService.buscarAgendPaciente(PacienteFinal);
 					}
 					
 					JOptionPane.showMessageDialog(null, "Consulta Salva!", null, 1);
