@@ -17,7 +17,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		ContatosService contatosService = new ContatosService();
+//		ContatosService contatosService = new ContatosService();
 		
 //		Contato contato = new Contato();
 //		contato.setEmail("andrefariasti@gmai.com");
@@ -46,10 +46,10 @@ public class Main {
 //		pessoa.setDtNascimento(new Date());
 //		pessoa.setCPF("075.854.634-30");
 //		
-		PessoaService pessoaService = new PessoaService();
+//		PessoaService pessoaService = new PessoaService();
 //		pessoaService.salvar(pessoa);
 		
-		Pessoa pessoa = pessoaService.buscarId(1l);
+//		Pessoa pessoa = pessoaService.buscarId(1l);
 		
 //		con.setEmail("JOSEfariasti@gmai.com");
 //		
@@ -57,11 +57,11 @@ public class Main {
 		
 		//service.salvar(contato);
 		
-		Paciente paciente = new Paciente();
-		paciente.setPessoa(pessoa);
-		
-		PacienteService pacienteService = new PacienteService();
-		pacienteService.salvar(paciente);
+//		Paciente paciente = new Paciente();
+//		paciente.setPessoa(pessoa);
+//		
+//		PacienteService pacienteService = new PacienteService();
+//		pacienteService.salvar(paciente);
 		
 		JFrame frame = new JFrameMain();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

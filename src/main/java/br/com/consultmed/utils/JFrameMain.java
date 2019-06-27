@@ -9,7 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import br.com.consultmed.service.PacienteService;
+
 public class JFrameMain extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 
 	public JFrameMain() {
     	
@@ -29,6 +33,9 @@ public class JFrameMain extends JFrame {
 				
 				try {
 
+					PacienteService pacienteService = new PacienteService();
+					pacienteService.cadastraPaciente();
+					
 				} catch (Exception e2) {
 					// TODO: handle exception
 				}
@@ -38,7 +45,7 @@ public class JFrameMain extends JFrame {
         
         panel.add(CadastrarCliente);
         
-        JButton CadastrarAtendente = new JButton("Cadastrar Madico");
+        JButton CadastrarAtendente = new JButton("Cadastrar Medico");
         CadastrarAtendente.addActionListener(new ActionListener() {
 			
 			@Override

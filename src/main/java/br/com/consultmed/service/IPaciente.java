@@ -6,6 +6,7 @@ import br.com.consultmed.model.Paciente;
 
 public interface IPaciente {
 
+	public void cadastraPaciente();
 	public void salvar(Paciente paciente);
 	public void remover(Long idPaciente);
 	public List<Paciente> listar();
