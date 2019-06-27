@@ -9,6 +9,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import br.com.consultmed.service.AgendamentoService;
+import br.com.consultmed.service.ConsultaService;
+import br.com.consultmed.service.MedicoService;
 import br.com.consultmed.service.PacienteService;
 
 public class JFrameMain extends JFrame {
@@ -45,7 +48,7 @@ public class JFrameMain extends JFrame {
         
         panel.add(CadastrarCliente);
         
-        JButton CadastrarAtendente = new JButton("Cadastrar Medico");
+        JButton CadastrarAtendente = new JButton("Cadastrar Médico");
         CadastrarAtendente.addActionListener(new ActionListener() {
 			
 			@Override
@@ -53,6 +56,8 @@ public class JFrameMain extends JFrame {
 				
 				try {
 					
+					MedicoService medicoService = new MedicoService();
+					medicoService.cadastraMedico();
 
 				} catch (Exception e2) {
 					// TODO: handle exception
@@ -63,13 +68,16 @@ public class JFrameMain extends JFrame {
         
         panel.add(CadastrarAtendente);
         
-        JButton cadastrarOS = new JButton("Realizar Consulta");
+        JButton cadastrarOS = new JButton("Incluir Consulta");
         cadastrarOS.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
+					
+					ConsultaService consultaService = new ConsultaService();
+					consultaService.incluirConsulta();
 
 				} catch (Exception e2) {
 					// TODO: handle exception
@@ -80,7 +88,7 @@ public class JFrameMain extends JFrame {
         
         panel.add(cadastrarOS);
         
-        JButton resolverOS = new JButton("Resolver Orden de Serviço");
+        JButton resolverOS = new JButton("Incluir Agendamento");
         resolverOS.addActionListener(new ActionListener() {
 			
 			@Override
@@ -88,6 +96,9 @@ public class JFrameMain extends JFrame {
 				
 				try {
 
+					AgendamentoService agendamentoService = new AgendamentoService();
+					agendamentoService.incluirAgendamento();
+					
 				} catch (Exception e2) {
 					// TODO: handle exception
 				}
