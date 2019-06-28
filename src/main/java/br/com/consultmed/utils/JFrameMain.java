@@ -108,7 +108,7 @@ public class JFrameMain extends JFrame {
         
         panel.add(resolverOS);
         
-        JButton cadastraTecnico = new JButton("Cadastra Tecnico");
+        JButton cadastraTecnico = new JButton("Cancelar Agendamento");
         cadastraTecnico.addActionListener(new ActionListener() {
 			
 			@Override
@@ -125,7 +125,7 @@ public class JFrameMain extends JFrame {
         
         panel.add(cadastraTecnico);
         
-        JButton exibirHistorico = new JButton("Exibir Historico");
+        JButton exibirHistorico = new JButton("Reagendar Consulta");
         exibirHistorico.addActionListener(new ActionListener() {
 			
 			@Override
