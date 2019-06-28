@@ -9,7 +9,7 @@ public class JPAUtils {
 	
 	public static EntityManagerFactory getEntityManagerFactory() {
 		if(factory == null) {
-			factory = Persistence.createEntityManagerFactory(Contantes.PERSISTENCE_UNIT_NAME);
+			factory = Persistence.createEntityManagerFactory(Constantes.PERSISTENCE_UNIT_NAME);
 		}
 		return factory;
 	}

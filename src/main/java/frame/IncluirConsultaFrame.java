@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -17,11 +18,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import br.com.consultmed.model.Agendamento;
+import br.com.consultmed.model.Consulta;
+import br.com.consultmed.model.Exame;
 import br.com.consultmed.model.Medico;
 import br.com.consultmed.model.Paciente;
+import br.com.consultmed.model.Prontuario;
 import br.com.consultmed.service.AgendamentoService;
+import br.com.consultmed.service.ConsultaService;
+import br.com.consultmed.service.ExameService;
 import br.com.consultmed.service.MedicoService;
 import br.com.consultmed.service.PacienteService;
+import br.com.consultmed.service.ProntuarioService;
+import br.com.consultmed.utils.Constantes;
 
 public class IncluirConsultaFrame extends JFrame{
 
@@ -65,13 +73,13 @@ public class IncluirConsultaFrame extends JFrame{
         JComboBox comboMedico = new JComboBox(vetorMedico);
         panel.add(comboMedico);
         
-        panel.add( new JLabel("   Com Agendamento:") );
-        JCheckBox checkAgend = new JCheckBox();
-        panel.add(checkAgend);
+        panel.add( new JLabel("   Com Exame:") );
+        JCheckBox checkExame = new JCheckBox();
+        panel.add(checkExame);
         
-	    panel.add( new JLabel("   Exame:") );
-	    JTextField exame = new JTextField(50);
-	    panel.add( exame );
+	    panel.add( new JLabel("   Descrição do Exame:") );
+	    JTextField exameLabel = new JTextField(50);
+	    panel.add( exameLabel );
 	      
 	    panel.add( new JLabel("   Descrição da Consulta:") );
 	    JTextField descricao = new JTextField(50);
@@ -87,23 +95,64 @@ public class IncluirConsultaFrame extends JFrame{
 				
 				try {
 					
-					Object select = comboPaciente.getSelectedItem();
-					
+					Object selectPciente = comboPaciente.getSelectedItem();
 					Paciente PacienteFinal = null;
 					for(Paciente p : listaPciente) {
-						if(p.getPessoa().getNome().equals(select)) {
+						if(p.getPessoa().getNome().equals(selectPciente)) {
 							PacienteFinal = p;
 						}
 					}
 					
-					if(checkAgend.isSelected()) {
-						AgendamentoService agendamentoService = new AgendamentoService();
-						Agendamento agendamento = agendamentoService.buscarAgendPaciente(PacienteFinal);
+					Object selectMedico = comboMedico.getSelectedItem();
+					Medico medicoFinal = null;
+					for(Medico m : listaMedico) {
+						if(m.getPessoa().getNome().equals(selectMedico)) {
+							medicoFinal = m;
+						}
 					}
+
+					Consulta consulta = new Consulta();
+					consulta.setMedico(medicoFinal);
 					
-					JOptionPane.showMessageDialog(null, "Consulta Salva!", null, 1);
+					AgendamentoService agendamentoService = new AgendamentoService();
+					Agendamento agendamento = agendamentoService.buscarAgendPaciente(PacienteFinal);
 					
-					IncluirConsultaFrame.this.dispose();
+					if(null != agendamento) {
+						consulta.setAgendamento(agendamento);
+						consulta.setTsAtualizacao(new Date());
+						consulta.setSituacao(Constantes.SITUACAO_CONSULTA_REALIZADA);
+						consulta.setMedico(medicoFinal);
+						
+						ConsultaService consultaService = new ConsultaService();
+						consultaService.salvar(consulta);
+						
+						if (checkExame.isSelected()) {
+
+							Exame exame = new Exame();
+							exame.setConsulta(consulta);
+							exame.setTipoExame(exameLabel.getText());
+
+							ExameService exameService = new ExameService();
+							exameService.salvar(exame);
+						}
+						
+						Prontuario prontuario = new Prontuario();
+						prontuario.setDescricao(descricao.getText());
+						prontuario.setPaciente(PacienteFinal);
+						prontuario.setTsAtualizacao(new Date());
+						prontuario.setConsulta(consulta);
+						
+						ProntuarioService prontuarioService = new ProntuarioService();
+						prontuarioService.salvar(prontuario);
+						
+						JOptionPane.showMessageDialog(null, "Consulta Salva!", null, 1);
+						
+						IncluirConsultaFrame.this.dispose();
+					}else {
+						JOptionPane.showMessageDialog(null, "SEM AGENDAMENTO!", null, 1);
+						
+						IncluirConsultaFrame.this.dispose();
+					}
 					
 				} catch (Exception e2) {
 					// TODO: handle exception

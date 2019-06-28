@@ -23,6 +23,7 @@ import br.com.consultmed.model.Agendamento;
 import br.com.consultmed.model.Paciente;
 import br.com.consultmed.service.AgendamentoService;
 import br.com.consultmed.service.PacienteService;
+import br.com.consultmed.utils.Constantes;
 
 public class CadastraAgendamentoFrame extends JFrame {
 
@@ -89,7 +90,7 @@ private static final long serialVersionUID = 1L;
 					Agendamento agendamento = new Agendamento();
 					agendamento.setPaciente(pacienteFinal);
 					agendamento.setDhAgenda(dataFormatada);
-					agendamento.setSituacao(1l);
+					agendamento.setSituacao(Constantes.SITUACAO_AGEND_ATIVO);
 					
 					AgendamentoService agendamentoService = new AgendamentoService();
 					agendamentoService.salvar(agendamento);

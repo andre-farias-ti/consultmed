@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import br.com.consultmed.model.Agendamento;
@@ -51,11 +52,15 @@ public class AgendamentoDAO {
 	}
 	
 	public Agendamento AgendamentPorPaciente(Paciente paciente) {
-		this.factory.getTransaction().begin();
-		Query query = this.factory.createQuery("SELECT a FROM Agendamento a WHERE id_paciente = :id");
-		query.setParameter("id", paciente.getId());
-		Agendamento result = (Agendamento) query.getSingleResult();
-		this.factory.close();
-		return result;
+		try {
+			this.factory.getTransaction().begin();
+			Query query = this.factory.createQuery("SELECT a FROM Agendamento a WHERE id_paciente = :id");
+			query.setParameter("id", paciente.getId());
+			Agendamento result = (Agendamento) query.getSingleResult();
+			this.factory.close();
+			return result;
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 }

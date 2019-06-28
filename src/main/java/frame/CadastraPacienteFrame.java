@@ -25,7 +25,7 @@ import br.com.consultmed.service.ContatosService;
 import br.com.consultmed.service.EnderecoService;
 import br.com.consultmed.service.PacienteService;
 import br.com.consultmed.service.PessoaService;
-import br.com.consultmed.utils.Contantes;
+import br.com.consultmed.utils.Constantes;
 
 public class CadastraPacienteFrame extends JFrame{
 
@@ -144,7 +144,7 @@ public class CadastraPacienteFrame extends JFrame{
 					Date dataFormatada = formato.parse(dataNascimento.getText());
 					pessoa.setDtNascimento(dataFormatada);
 					pessoa.setSexo(sexo.getText());
-					pessoa.setTipo(Contantes.TP_PESSOA_PACIENTE);
+					pessoa.setTipo(Constantes.TP_PESSOA_PACIENTE);
 					pessoa.setContato(contato);
 					pessoa.setEndereco(endereco);
 					
